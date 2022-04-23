@@ -11,7 +11,7 @@ class ViewMembersPage extends StatelessWidget {
       text = "All Members";
     } else {
       //Sent from ViewTraining, show attendance of training
-      text = sender + " attendance";
+      text = sender.split(',').join(' ') + " attendance";
     }
     return Center(
         child: Scaffold(
@@ -37,7 +37,7 @@ class _MembersWidegtState extends State<MembersWidegt> {
   List<Member> shownMembers = [];
 
   Future<void> changeShownMembers() async {
-    List<String> training = sender.split(' ');
+    List<String> training = sender.split(',');
     List<String> personAttendance =
         await Coms.getAttendance(training[1], training[0]);
     List<Member> newMembers = [];
@@ -71,7 +71,7 @@ class _MembersWidegtState extends State<MembersWidegt> {
         children: [
           Text(shownMembers[i].getFullName()),
           IconButton(
-            icon: Icon(Icons.arrow_right),
+            icon: const Icon(Icons.arrow_right),
             onPressed: () {
               //add navigation to view trainings with the person name
               Navigator.push(

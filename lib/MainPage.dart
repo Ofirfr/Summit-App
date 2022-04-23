@@ -18,9 +18,10 @@ class MainPage extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20.0),
               child: InkWell(
                 onTap: () {
+                  Coms.logout();
                   Navigator.pushAndRemoveUntil(
                       context,
-                      new MaterialPageRoute(builder: (ctxt) => new LoginPage()),
+                      MaterialPageRoute(builder: (ctxt) => const LoginPage()),
                       (route) => false);
                 },
                 child: const Icon(
@@ -57,7 +58,7 @@ class MainPage extends StatelessWidget {
               {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (ctxt) => new AdminPage()),
+                  MaterialPageRoute(builder: (ctxt) => const AdminPage()),
                 );
                 break;
               }
@@ -66,7 +67,7 @@ class MainPage extends StatelessWidget {
               {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (ctxt) => new CalendarPage()),
+                  MaterialPageRoute(builder: (ctxt) => const CalendarPage()),
                 );
                 break;
               }

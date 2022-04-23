@@ -37,6 +37,7 @@ dependencies:
   http: ^0.13.4
   syncfusion_flutter_datepicker: ^20.1.50
   auto_size_text: ^3.0.0
+  crypt: ^4.2.1
 
 dev_dependencies:
   flutter_test:

@@ -68,9 +68,9 @@ class _TrainingsWidegtState extends State<TrainingsWidegt> {
     for (int i = 0; i < shownTrainings.length; i++) {
       widegtRows.add(Row(
         children: [
-          Text(shownTrainings[i]),
+          Text(shownTrainings[i].split(',').join(' ')),
           IconButton(
-            icon: Icon(Icons.arrow_right),
+            icon: const Icon(Icons.arrow_right),
             onPressed: () {
               //add navigation to view person with the training
               Navigator.push(

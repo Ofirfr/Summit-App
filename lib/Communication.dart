@@ -22,20 +22,35 @@ class Coms {
   static const String ip = "http://192.168.79.1:5000/";
 
   static List<Member> members = [];
+  static String token = "";
   static List<Member> getCopyOfMembers() {
     List<Member> result = [];
     result.addAll(members);
     return result;
   }
 
+  static Future<void> logout() async {
+    String url = ip + "Logout/" + token;
+    get(Uri.parse(url));
+  }
+
   static Future<bool> login(username, password) async {
-    String loginUrl = "Login/" + username + '/' + password;
+    String loginUrl = "Login/" +
+        username +
+        '/' +
+        Crypt.sha512(password,
+                salt:
+                    "hjegbvjhrtbvawjknfvrtgegetrgetrgtergterghbivnbvsrtubvrst")
+            .toString()
+            .replaceAll('/', 'T');
+    print(loginUrl);
     var data = await fetchData(loginUrl);
     if (data[0] == "Invalid") return false;
     members.clear();
-    for (int i = 0; i < data.length; i++) {
+    token = data[0];
+    for (int i = 1; i < data.length; i++) {
       var info = data[i].split(',');
-      members.add(new Member(info[0], info[1], int.parse(info[2])));
+      members.add(Member(info[0], info[1], int.parse(info[2])));
     }
     return true;
   }
@@ -58,8 +73,15 @@ class Coms {
       personsIds.add(person.id);
     }
     String personsString = personsIds.join(',');
-    String fullUrl =
-        ip + "AddToTraining/" + personsString + "/" + date + "/" + coach;
+    String fullUrl = ip +
+        "AddToTraining/" +
+        personsString +
+        "/" +
+        date +
+        "/" +
+        coach +
+        "/" +
+        token;
     get(Uri.parse(fullUrl));
   }
 
@@ -69,36 +91,58 @@ class Coms {
       personsIds.add(person.id);
     }
     String personsString = personsIds.join(',');
-    String fullUrl =
-        ip + "RemoveFromTraining/" + personsString + "/" + date + "/" + coach;
+    String fullUrl = ip +
+        "RemoveFromTraining/" +
+        personsString +
+        "/" +
+        date +
+        "/" +
+        coach +
+        "/" +
+        token;
     get(Uri.parse(fullUrl));
   }
 
   static Future<bool> addMember(String firstName, String lastName) async {
-    String fullUrl = ip + "AddMember/" + firstName + "/" + lastName;
+    String fullUrl =
+        ip + "AddMember/" + firstName + "/" + lastName + "/" + token;
     String response = (await get(Uri.parse(fullUrl))).bodyBytes.toString();
-    members.add(new Member(firstName, lastName, int.parse(response)));
-    return true;
+    if (response != "Can't authenticate") {
+      members.add(Member(firstName, lastName, int.parse(response)));
+      return true;
+    }
+    return false;
   }
 
   static Future<bool> addUser(String username, String password) async {
-    String fullUrl = ip + "AddUser/" + username + "/" + password;
+    String fullUrl = ip +
+        "AddUser/" +
+        username +
+        "/" +
+        Crypt.sha512(password,
+                salt:
+                    "hjegbvjhrtbvawjknfvrtgegetrgetrgtergterghbivnbvsrtubvrst")
+            .toString()
+            .replaceAll('/', 'T') +
+        "/" +
+        token;
     String response = (await get(Uri.parse(fullUrl))).bodyBytes.toString();
     return response == "OK";
   }
 
   static Future<List<String>> getAttendance(String date, String coach) async {
-    final String getAttendaceUrl = "GetAttendance/" + date + "/" + coach;
+    final String getAttendaceUrl =
+        "GetAttendance/" + date + "/" + coach + "/" + token;
     return Coms.fetchData(getAttendaceUrl);
   }
 
   static Future<List<String>> getTrainings(int id) async {
-    String getTrainingsUrl = "GetTrainings/" + id.toString();
+    String getTrainingsUrl = "GetTrainings/" + id.toString() + "/" + token;
     return Coms.fetchData(getTrainingsUrl);
   }
 
   static Future<List<String>> getAllTrainings() async {
-    String getTrainingsUrl = "GetAllTrainings";
+    String getTrainingsUrl = "GetAllTrainings/" + token;
     return Coms.fetchData(getTrainingsUrl);
   }
 }
