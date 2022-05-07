@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 part of 'main.dart';
 
 class ViewMembersPage extends StatelessWidget {
@@ -58,12 +60,15 @@ class _MembersWidegtState extends State<MembersWidegt> {
   void initState() {
     super.initState();
     if (sender == "") {
+      // Sent from admin page so all members shown
       shownMembers = Coms.getCopyOfMembers();
     } else {
+      // Sent from ViewTrainings so only attendance shown
       changeShownMembers();
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     List<Widget> widegtRows = [];
     for (int i = 0; i < shownMembers.length; i++) {

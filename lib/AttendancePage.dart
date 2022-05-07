@@ -94,11 +94,7 @@ bool changed =
     false; // for checked buttons to not be modified by build every time
 
 class _AttendanceWidegtState extends State<AttendanceWidegt> {
-  //get list of everyone who came, store in list of class Person - name, id (in db) and boolean
-
-  //edit the list with the buttons
-
-  //send a list of the people (only ids) who came to the server (add save button that sends and takes you to First Page)
+  // get writen attendance from server and check for every person who came his .came to true
   void markAttendance() async {
     if (mounted) {
       attendance = await Coms.getAttendance(
@@ -118,6 +114,7 @@ class _AttendanceWidegtState extends State<AttendanceWidegt> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     List<Widget> widegtRows = [];
     if (!changed) {

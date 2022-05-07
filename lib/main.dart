@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:crypt/crypt.dart';
+import 'package:crypto/crypto.dart';
 part 'CalendarPage.dart';
 part 'SecondPage.dart';
 part 'AttendancePage.dart';

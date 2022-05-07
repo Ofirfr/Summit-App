@@ -61,7 +61,8 @@ class CalendarPageState extends State<CalendarPage> {
                 if (selectedDate != "") {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (ctxt) => AttendancePage()),
+                    MaterialPageRoute(
+                        builder: (ctxt) => const AttendancePage()),
                   );
                 }
               },

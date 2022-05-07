@@ -29,32 +29,6 @@ class Coms {
     return result;
   }
 
-  static Future<void> logout() async {
-    String url = ip + "Logout/" + token;
-    get(Uri.parse(url));
-  }
-
-  static Future<bool> login(username, password) async {
-    String loginUrl = "Login/" +
-        username +
-        '/' +
-        Crypt.sha512(password,
-                salt:
-                    "hjegbvjhrtbvawjknfvrtgegetrgetrgtergterghbivnbvsrtubvrst")
-            .toString()
-            .replaceAll('/', 'T');
-    print(loginUrl);
-    var data = await fetchData(loginUrl);
-    if (data[0] == "Invalid") return false;
-    members.clear();
-    token = data[0];
-    for (int i = 1; i < data.length; i++) {
-      var info = data[i].split(',');
-      members.add(Member(info[0], info[1], int.parse(info[2])));
-    }
-    return true;
-  }
-
   static Future<List<String>> fetchData(String url) async {
     String fullUrl = ip + url;
     final response = await get(Uri.parse(fullUrl),
@@ -65,6 +39,27 @@ class Coms {
       result.add(jsonData[i]);
     }
     return result;
+  }
+
+  static Future<void> logout() async {
+    String url = ip + "Logout/" + token;
+    get(Uri.parse(url));
+  }
+
+  static Future<bool> login(username, password) async {
+    String loginUrl = "Login/" +
+        username +
+        '/' +
+        sha512.convert(utf8.encode(password)).toString();
+    var data = await fetchData(loginUrl);
+    if (data[0] == "Invalid") return false;
+    members.clear();
+    token = data[0];
+    for (int i = 1; i < data.length; i++) {
+      var info = data[i].split(',');
+      members.add(Member(info[0], info[1], int.parse(info[2])));
+    }
+    return true;
   }
 
   static void addPersons(List<Person> persons, String coach, String date) {
@@ -119,11 +114,7 @@ class Coms {
         "AddUser/" +
         username +
         "/" +
-        Crypt.sha512(password,
-                salt:
-                    "hjegbvjhrtbvawjknfvrtgegetrgetrgtergterghbivnbvsrtubvrst")
-            .toString()
-            .replaceAll('/', 'T') +
+        sha512.convert(utf8.encode(password)).toString() +
         "/" +
         token;
     String response = (await get(Uri.parse(fullUrl))).bodyBytes.toString();

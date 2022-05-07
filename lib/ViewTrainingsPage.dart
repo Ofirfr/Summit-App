@@ -62,7 +62,7 @@ class _TrainingsWidegtState extends State<TrainingsWidegt> {
       changeShownTrainings();
     }
   }
-
+  @override
   Widget build(BuildContext context) {
     List<Widget> widegtRows = [];
     for (int i = 0; i < shownTrainings.length; i++) {

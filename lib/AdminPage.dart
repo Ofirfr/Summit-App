@@ -29,50 +29,53 @@ class AdminPage extends StatelessWidget {
       )
     ]);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(
-              height: 10,
-              width: 200,
-            ),
-            Center(
-              child: Container(
-                height: 60,
-                width: 400,
-                alignment: Alignment.center,
-                child: const AutoSizeText(
-                  "Admin Actions",
-                  maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          backgroundColor: Colors.blueAccent,
+        ),
+        body: SingleChildScrollView(
+          reverse: true,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                  width: 200,
+                ),
+                Center(
+                  child: Container(
+                    height: 60,
+                    width: 400,
+                    alignment: Alignment.center,
+                    child: const AutoSizeText(
+                      "Admin Actions",
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-              width: 1,
-            ),
-            Container(
-              height: 540.0,
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.symmetric(vertical: 50.0),
-              child: Table(
-                children: [
-                  TableRow(children: firstRow),
-                  rowSpacer,
-                  TableRow(children: secondRow)
-                ],
-              ),
-            ),
-          ]),
-    );
+                const SizedBox(
+                  height: 20,
+                  width: 1,
+                ),
+                Container(
+                  height: 540.0,
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.symmetric(vertical: 50.0),
+                  child: Table(
+                    children: [
+                      TableRow(children: firstRow),
+                      rowSpacer,
+                      TableRow(children: secondRow)
+                    ],
+                  ),
+                ),
+              ]),
+        ));
   }
 
   Widget adminButtonWidget(String label, BuildContext context) {
