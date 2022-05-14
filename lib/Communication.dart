@@ -103,7 +103,7 @@ class Coms {
         ip + "AddMember/" + firstName + "/" + lastName + "/" + token;
     String response = (await get(Uri.parse(fullUrl))).bodyBytes.toString();
     if (response != "Can't authenticate") {
-      members.add(Member(firstName, lastName, int.parse(response)));
+      members.add(Member(firstName, lastName, int.parse(response[0])));
       return true;
     }
     return false;
