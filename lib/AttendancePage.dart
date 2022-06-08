@@ -86,7 +86,7 @@ class AttendanceWidegt extends StatefulWidget {
 }
 
 //users should be the copy of the list of EVERYONE, which should be brought from the server on connection
-List<Person> users = Team().getTeam();
+List<Person> users = [];
 List<Person> personsAdded = [];
 List<Person> personsRemoved = [];
 List<String> attendance = [];
@@ -95,6 +95,7 @@ bool changed =
 
 class _AttendanceWidegtState extends State<AttendanceWidegt> {
   // get writen attendance from server and check for every person who came his .came to true
+
   void markAttendance() async {
     if (mounted) {
       attendance = await Coms.getAttendance(
@@ -112,6 +113,11 @@ class _AttendanceWidegtState extends State<AttendanceWidegt> {
           }
         }
     }
+  }
+
+  void initState() {
+    super.initState();
+    users = Team().getTeam();
   }
 
   @override
